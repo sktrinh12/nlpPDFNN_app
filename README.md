@@ -14,6 +14,7 @@ There are two tabs that refer to the method of parsing. One is through an email 
 1. Guesstimated NSC numbers that relate to the natural product extract (compound)
 2. Guesstimated taxonomy names that were found in the corpus
 
-Link to the [`Google Colabs`](#https://colab.research.google.com/drive/1x5JXXJfnQ1GZEfmuaJVtfjgz1ARLtIiT#scrollTo=pl4N4q46h64c&uniqifier=1) to view the code 
+Link to the [Google Colabs](#https://colab.research.google.com/drive/1x5JXXJfnQ1GZEfmuaJVtfjgz1ARLtIiT#scrollTo=pl4N4q46h64c&uniqifier=1) to view the `Tensorflow` code that was used to build the model.
+
 Screenshot of the web-app:
 ![Screenshot](static/screenshot.png)
