@@ -10,25 +10,25 @@
   <div class="row">
     <div class="col">
 
-    <a href="{{ url_for('index') }}"><h1>{{ the_title }}</h1></a>
       <hr>
 
       <div class="row">
-      <div class="col-7">
-        <form action="/upload-pdf" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-            <div class="custom-file">
-              <input oninput="filesize(this);" type="file" class="custom-file-input" name="pdf_up" id="pdf_up">
-              <label class="custom-file-label" for="pdf_up">Select file (.txt or .pdf)</label>
+        <div class="input-box">
+          <form action="/upload-pdf" method="POST" enctype="multipart/form-data">
+            <div>
+              <input oninput="filesize(this);"
+              type="file"
+              name="pdf_up"
+              id="pdf_up"
+              placeholder="Select file (.txt or .pdf)">
             </div>
-          </div>
+        </div>
        </div>
-      </div>
 
       <br>
 
-      <div class="row">          
-        <div class="col-4">
+      <div class="row">
+        <div class="input-box">
           <button onclick="loading();" type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
         </div>
       </div>
@@ -38,63 +38,17 @@
 
       <br>
 
-      <h3><span class="blue-primary">Filename: </span>{{ filename }}</h3>
+      {% if filename is defined %}
+        <h3><span class="blue-primary">Filename: </span>{{ filename }}</h3>
+      {% endif %}
 
-      <hr>
-      <br>
+      {% if nscs is defined %}
+        {% include 'nscs.html' %}
+      {% endif %}
 
-          <h3 class="blue-primary"><stong>Possible NSC:</stong></h3>
-
-          <table class="wordpair-table">
-                {% set max_columns = 5 %}
-                  {% if nscs|length <= max_columns %}
-                    {% set rows = 1 %}
-                  {% else %}
-                    {% set rows = (nscs|length % max_columns) %}
-                    {{ nscs|length}}
-                  {% endif %}
-
-                  {% for r in range(rows) %}
-                    <tr>
-                      {% for c in range(max_columns) %}
-                        {% set cell_pos = (r * max_columns) + c %}
-                        {% if cell_pos < nscs|length %}
-                          <td class="wordpair-col"> 
-                            {{ nscs[cell_pos] }}
-                          </td>
-                        {% endif %}
-                      {% endfor %}
-                    </tr>
-                  {% endfor %}
-         </table>
-
-      <br>
-      <hr>
-
-            <h3 class="blue-primary">Guesstimated Taxonomy Name:</h3>
-
-              <table class="wordpair-table">
-                
-                {%  set max_columns = 3 %}
-                    {% if poss_wp|length % max_columns == 0 %}
-                      {% set buffer = 0 %}
-                    {% else %}
-                      {% set buffer = 1 %}
-                    {% endif %}
-
-                    {% set interval = poss_wp|length / max_columns %}
-                    {% set rows = interval|int + buffer %}    
-                      {% for p in range(rows) %}
-                        <tr>
-                          {% for n in range(max_columns) %}
-                            {% set cell_pos = (p * max_columns) + n %}
-                              {% if cell_pos < poss_wp|length %}
-                                <td class="wordpair-col">{{ poss_wp[cell_pos] }}</td>
-                              {% endif %}
-                          {% endfor %}
-                        </tr>
-                      {% endfor %}
-              </table>
+      {% if wp is defined %}
+        {% include 'taxon_names.html' %}
+      {% endif %}
 
     </div>
   </div>

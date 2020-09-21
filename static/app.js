@@ -14,11 +14,14 @@ function close_btn(){ //close the flash message
   clear_fz();
 };
 
-document.querySelector('.custom-file-input').addEventListener('change',function(e){ //show filename in the input
-  var fileName = document.getElementById("pdf_up").files[0].name;
-  var nextSibling = e.target.nextElementSibling
-  nextSibling.innerText = fileName
-});
+var fileInputDiv = document.querySelector('.custom-file-input');
+if (fileInputDiv !== null) {
+  fileInputDiv.addEventListener('change',function(e){ //show filename in the input
+    var fileName = document.getElementById("pdf_up").files[0].name;
+    var nextSibling = e.target.nextElementSibling
+    nextSibling.innerText = fileName
+  });
+};
 
 // loader appears in between pages and links
 window.addEventListener("load", function () {
@@ -32,24 +35,18 @@ function loading() {
     setTimeout(clear_fz, 12000);
 };
 
-// loader appears if refresh button pressed (ctrl or cmd R)
-// document.addEventListener("keydown", function onEvent(event) {
-//     var f5key = 116;
-//     // if (event.key === "r" && event.ctrlKey) {
-//     //   console.log('ctrl R pressed');
-//     // }
-//     // event.metaKey read-only property returning a Boolean that indicates if the 
-//     // Meta key was pressed (true) or not (false) when the event occurred
-//     if (event.key === "r" && event.keyCode <= 90 || 
-//         event.key === "r" && event.ctrlKey ||
-//         event.which == f5key) {
-//     var char = (event.metaKey ? '⌘-' : '') + String.fromCharCode(event.keyCode)
-//     console.log('<kbd>' + char + '</kbd>' + ' refreshing ...');
-//     loading();
-//   }
-// });
+// switch tabs on navbar triggering active tab
+function switch_tabs(navbar) {
+	if (navbar === $("#email-navbar")[0]) {
+		navbar.className = "nav-link active";
+		document.getElementById("email-navbar").className = "nav-link";
+	} else {
+		navbar.className = "nav-link active";
+		document.getElementById("email-navbar").className = "nav-link";
+	};
+};
 
-// use of onbeforeunload to detect refresh 
+// use of onbeforeunload to detect refresh
 function loader_refresh() {
   loading();
   console.log('refresh button clicked');

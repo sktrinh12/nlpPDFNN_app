@@ -14,6 +14,33 @@
 
 <div id="container">
 
+  <a href="{{ url_for('index') }}"><h1>NLP PDF journal article keyword extraction</h1></a>
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-beige">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+       {% if switch_tab_var == 'email' %}
+		{% set email_tab = 'nav-link active' %}
+		{% set file_tab = 'nav-link' %}
+       {% else %}
+	    {% set email_tab = 'nav-link' %}
+	    {% set file_tab = 'nav-link active' %}
+       {% endif %}
+       <a class="{{ email_tab }}"
+	 href="{{ url_for('index') }}"
+	 onclick="switch_tabs(this)"
+	 id="email-navbar">Email link</a>
+    </li>
+    <li class="nav-item">
+      <a class="{{ file_tab }}"
+        href="{{ url_for('upload_pdf') }}"
+	onclick="switch_tabs(this)"
+	id="file-navbar">Upload file</a>
+    </li>
+  </ul>
+  </nav>
+
   {% block body %}
   {% endblock %}
 

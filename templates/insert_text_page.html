@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <hr>
+
+      <div class="row">
+        <div class="input-box">
+          <form action="/insert-text" method="POST">
+            <div>
+              <input type="text" name="url-input" id="url-input">
+            </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="input-box">
+          <button onclick="loading();" type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+
+      </form>
+      <br>
+
+      <br>
+
+
+      {% if email_link is defined %}
+        <h3><span class="blue-primary">Email link: </span>{{ email_link }}</h3>
+      {% endif %}
+
+      {% if nscs is defined %}
+        {% include 'nscs.html' %}
+      {% endif %}
+
+      {% if wp is defined %}
+        {% include 'taxon_names.html' %}
+      {% endif %}
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

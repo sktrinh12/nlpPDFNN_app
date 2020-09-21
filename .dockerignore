@@ -1,6 +1,12 @@
-models
 README.md
 __pycache__/*
 .DS_Store
 build.sh
 Makefile
+*.pyc
+*.pyo
+\<Plug\>_
+.DS_Store
+static/uploads
+__pycache__
+.ipynb_checkpoints/

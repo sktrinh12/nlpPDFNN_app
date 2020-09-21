@@ -1,12 +1,10 @@
 from werkzeug.utils import secure_filename
 from functions import *
-
-title = 'NLP PDF journal article keyword extraction'
+from math import ceil
 
 @app.route('/')
-@app.route('/index.html')
 def index():
-    return render_template('index.html', the_title=title)
+    return render_template('insert_text_page.html', switch_tab_var = 'email')
 
 @app.route("/test", methods=["GET", "POST"])
 def test():
@@ -28,7 +26,17 @@ def test():
                         "broad 23iu4hjljas",
                         "cars jaklsaf;",
                         "box alksjfa;ks",
-                        ], ["N1238980", "C891324", "J9834508", "M812703489", "N7104382"]
+                        ], ["N1238980",
+                            "C891324",
+                            "J9834508",
+                            "M812703489",
+                            "N7104382",
+                            "N7104382",
+                            "N7104382",
+                            "N7104382",
+                            "N7104382",
+                            "N7104382",
+                            "N7104382"]
 
     pdf_file = ''
     if pdf_file == "": #no file name
@@ -37,18 +45,57 @@ def test():
         flash(msg, 'warning')
         # return redirect('/', code=302)
 
+    length_nscs = len(poss_nscs)
+    rows = ceil(length_nscs / 5)
+    # print(length_nscs,rows)
+
     return render_template("upload_pdf.html", \
             filename='test_file.file', \
-            poss_wp=poss_wp, \
+            wp=poss_wp, \
             nscs=poss_nscs, \
-            the_title='title')
+            switch_tab_var='email',\
+            length_nscs=length_nscs,\
+            rows=rows)
+
+@app.route("/insert-text", methods=["GET", "POST"])
+def insert_text():
+    if request.method == "POST":
+        email_link = request.form['url-input']
+        if email_link:
+            if email_link.startswith('https://') and \
+                re.search(r'\d+', email_link.split('/')[-2]) and \
+                email_link.endswith('/'):
+                print(f"email link: {email_link}")
+                poss_wp = ["resemble tanke", "labored asfk","fog pweoiqr", "ride 234jlkcv"]
+                poss_nscs = ["N7104382", "N7104382", "N7104382", "N7104382"]
+                length_nscs = len(poss_nscs)
+                rows = ceil(length_nscs / 5)
+                print(length_nscs, rows)
+
+                return render_template('/insert_text_page.html',
+                                        email_link=email_link, \
+                                        wp=poss_wp, \
+                                        nscs=poss_nscs,
+                                        rows=rows,
+                                        length_nscs=length_nscs,
+                                        switch_tab_var='email')
+            else:
+                msg = f"The link's format appears to be invalid - {request.form['url-input']}"
+                print(msg)
+                flash(msg, 'warning')
+                return redirect('/')
+        else:
+            msg = 'Please enter an email link to the journal article'
+            print(msg)
+            flash(msg, 'warning')
+            return redirect('/')
+
 
 @app.route("/upload-pdf", methods=["GET", "POST"])
 def upload_pdf():
     if request.method == "POST":
         if request.files and "filesize" in request.cookies:
             print(f'filesize={request.cookies.get("filesize")}')
-            
             if not allowed_filesize(request.cookies.get("filesize")):
                 #based on filesize
                 msg = f'File exceeded maximum size, ({int(request.cookies.get("filesize"))/1e6:0.2f}MB > 5MB)'
@@ -58,11 +105,11 @@ def upload_pdf():
 
             pdf_file = request.files["pdf_up"]
 
-            if pdf_file.filename == "": #no file name
-                msg = "Must select a file"
-                print(msg)
-                flash(msg, 'warning')
-                # return redirect('/', code=302)
+            # if pdf_file.filename == "": #no file name
+            #     msg = "Must select a file"
+            #     print(msg)
+            #     flash(msg, 'warning')
+            # return redirect('/', code=302)
 
             if allowed_file(pdf_file.filename) : #file type
                 filename = secure_filename(pdf_file.filename)
@@ -72,21 +119,23 @@ def upload_pdf():
                 print(msg)
 
                 poss_wp, poss_nscs = tokenise_render_v2(filepath)
-
                 print(poss_wp)
+                length_nscs = len(poss_nscs)
+                rows = ceil(length_nscs / 5)
 
                 return render_template("upload_pdf.html", \
                         filename=filename, \
-                        poss_wp=poss_wp, \
-                        nscs=poss_nscs, \
-                        the_title=title)
+                        wp=poss_wp, \
+                        nscs=poss_nscs,\
+                        length_nscs=length_nscs,\
+                        rows=rows)
             else:
                 msg = 'That file is not acceptable, should be .txt or .pdf'
                 if pdf_file.filename != "": # hackish way to prevent double flash messasge
                     flash(msg, 'warning')
                     print(msg)
-                # return redirect('/', code=302)
-        return render_template('index.html',the_title=title)
+
+    return render_template('upload_pdf.html', switch_tab_var = 'file')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8050)
+    app.run(host="0.0.0.0", port=8050, debug=True)

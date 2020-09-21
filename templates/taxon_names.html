@@ -1,0 +1,27 @@
+<br>
+<hr>
+
+<h3 class="blue-primary">Guesstimated Taxonomy Name(s):</h3>
+
+  <table class="wordpair-table">
+
+    {%  set max_columns = 3 %}
+	{% if wp|length % max_columns == 0 %}
+	  {% set buffer = 0 %}
+	{% else %}
+	  {% set buffer = 1 %}
+	{% endif %}
+
+	{% set interval = wp|length / max_columns %}
+	{% set rows = interval|int + buffer %}
+	  {% for p in range(rows) %}
+	    <tr>
+	      {% for n in range(max_columns) %}
+		{% set cell_pos = (p * max_columns) + n %}
+		  {% if cell_pos < wp|length %}
+		    <td class="wordpair-col">{{ wp[cell_pos] }}</td>
+		  {% endif %}
+	      {% endfor %}
+	    </tr>
+	  {% endfor %}
+  </table>

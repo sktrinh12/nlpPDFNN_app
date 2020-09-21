@@ -1,0 +1,19 @@
+<hr>
+<br>
+
+    <h3 class="blue-primary"><stong>Guesstimated NSC(s):</stong></h3>
+
+    <table class="wordpair-table">
+	    {% for r in range(rows) %}
+	      <tr>
+		{% for c in range(5) %}
+		  {% set cell_pos = (r * 5) + c %}
+		  {% if cell_pos < length_nscs %}
+		    <td class="wordpair-col">
+		      {{ nscs[cell_pos] }}
+		    </td>
+		  {% endif %}
+		{% endfor %}
+	      </tr>
+	    {% endfor %}
+   </table>
