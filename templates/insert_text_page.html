@@ -36,7 +36,11 @@
 
 
       {% if email_link is defined %}
-        <h3><span class="blue-primary">Email link: </span>{{ email_link }}</h3>
+        <h4><span class="blue-primary">Email link: </span>{{ email_link }}</h4>
+      {% endif %}
+
+      {% if filename is defined %}
+      	<h4><span class="blue-primary">Filename: </span>{{ filename }}</h4>
       {% endif %}
 
       {% if nscs is defined %}
