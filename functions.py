@@ -151,7 +151,6 @@ def bs_parse_email_dl_pdf(url, file_path):
     return True/False if able/un-able to download'''
     source = requests.get(url, headers=hdr).content
     # source = urllib.request.urlopen(url).read()
-    source = urllib.request.urlopen(url).read()
     soup = bs.BeautifulSoup(source, 'lxml')
     pdf_title = soup.title.text
     # remove nonascii chars for pdf file name
