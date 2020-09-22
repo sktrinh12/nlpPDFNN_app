@@ -1,6 +1,9 @@
+import os
 import tensorflow as tf
-
-model_file= '/Users/trinhsk/Documents/gitrepos/nlpPDFNN_app/models/taxon_model'
+model_file = os.path.dirname(os.path.abspath(__file__))
+# print(model_file)
+model_file = os.path.join(model_file, "models/taxon_model")
+# print(model_file)
 model = tf.keras.models.load_model(model_file)
 
 lst_of_samples = [
