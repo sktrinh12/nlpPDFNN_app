@@ -38,13 +38,6 @@ def test():
                             "N7104382",
                             "N7104382"]
 
-    pdf_file = ''
-    if pdf_file == "": #no file name
-        msg = "Must select a file"
-        print(msg)
-        flash(msg, 'warning')
-        # return redirect('/', code=302)
-
     length_nscs = len(poss_nscs)
     rows = ceil(length_nscs / 5)
     # print(length_nscs,rows)
@@ -72,24 +65,24 @@ def insert_text():
                 rows = ceil(length_nscs / 5)
                 print(length_nscs, rows)
 
-                return render_template('/insert_text_page.html',
+                return render_template('insert_text_page.html', \
                                         email_link=email_link, \
                                         wp=poss_wp, \
-                                        nscs=poss_nscs,
-                                        rows=rows,
-                                        length_nscs=length_nscs,
+                                        nscs=poss_nscs, \
+                                        rows=rows, \
+                                        length_nscs=length_nscs, \
                                         switch_tab_var='email')
             else:
                 msg = f"The link's format appears to be invalid - {request.form['url-input']}"
                 print(msg)
                 flash(msg, 'warning')
-                return redirect('/')
         else:
             msg = 'Please enter an email link to the journal article'
             print(msg)
             flash(msg, 'warning')
-            return redirect('/')
-
+    # ahs to render template and not redirect (nginx will crap itself)
+    return render_template('insert_text_page.html', switch_tab_var = 'email')
+    # return redirect('/')
 
 @app.route("/upload-pdf", methods=["GET", "POST"])
 def upload_pdf():
@@ -101,15 +94,13 @@ def upload_pdf():
                 msg = f'File exceeded maximum size, ({int(request.cookies.get("filesize"))/1e6:0.2f}MB > 5MB)'
                 print(msg)
                 flash(msg, 'warning')
-                # return redirect('/', code=302)
 
             pdf_file = request.files["pdf_up"]
 
-            # if pdf_file.filename == "": #no file name
-            #     msg = "Must select a file"
-            #     print(msg)
-            #     flash(msg, 'warning')
-            # return redirect('/', code=302)
+            if pdf_file.filename == "": #no file name
+                msg = "Must select a file"
+                print(msg)
+                flash(msg, 'warning')
 
             if allowed_file(pdf_file.filename) : #file type
                 filename = secure_filename(pdf_file.filename)
