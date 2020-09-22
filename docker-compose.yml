@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - "3500:80"
+    networks:
+      - docker-network
+    depends_on:
+      - flask
+
+  flask:
+    container_name: flask
+    restart: always
+    build: .
+    ports:
+      - "8050:8050"
+    command: gunicorn --bind 0.0.0.0:8050 --workers 2 "app:app"
+    volumes:
+      - ./:/app
+    networks:
+      docker-network:
+        aliases:
+          - flask-app
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=2
+
+networks:
+  docker-network:
