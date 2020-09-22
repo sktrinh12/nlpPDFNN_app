@@ -4,16 +4,24 @@
     <h3 class="blue-primary"><stong>Guesstimated NSC(s):</stong></h3>
 
     <table class="wordpair-table">
+
+    {% set max_columns = 5 %}
+	{% if nscs|length % max_columns == 0 %}
+	  {% set buffer = 0 %}
+	{% else %}
+	  {% set buffer = 1 %}
+	{% endif %}
+
+	{% set interval = nscs|length / max_columns %}
+	{% set rows = interval|int + buffer %}
 	    {% for r in range(rows) %}
 	      <tr>
-		{% for c in range(5) %}
-		  {% set cell_pos = (r * 5) + c %}
-		  {% if cell_pos < length_nscs %}
-		    <td class="wordpair-col">
-		      {{ nscs[cell_pos] }}
-		    </td>
+	      {% for c in range(max_columns) %}
+		{% set cell_pos = (r * max_columns) + c %}
+		  {% if cell_pos < nscs|length %}
+		    <td class="wordpair-col">{{ nscs[cell_pos] }}</td>
 		  {% endif %}
-		{% endfor %}
+	      {% endfor %}
 	      </tr>
 	    {% endfor %}
    </table>
