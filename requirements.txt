@@ -4,3 +4,4 @@ nltk
 pdfminer.six
 tensorflow
 beautifulsoup4
+lxml
