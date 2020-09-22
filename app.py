@@ -40,17 +40,15 @@ def test():
         "N7104382",
         "N7104382"]
 
-    length_nscs = len(poss_nscs)
-    rows = ceil(length_nscs / 5)
+    # length_nscs = len(poss_nscs)
+    # rows = ceil(length_nscs / 5)
     # print(length_nscs,rows)
 
     return render_template("upload_pdf.html",
                            filename='test_file.file',
                            wp=poss_wp,
                            nscs=poss_nscs,
-                           switch_tab_var='email',
-                           length_nscs=length_nscs,
-                           rows=rows)
+                           switch_tab_var='email')
 
 
 @app.route("/insert-text", methods=["GET", "POST"])
