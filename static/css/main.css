@@ -26,6 +26,8 @@ input[type=url] {
 
 #flash-msg {
   color: red;
+  margin-left:-2%;
+
 }
 
 table td:hover {
