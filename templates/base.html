@@ -14,7 +14,9 @@
 
 <div id="container">
 
-  <a href="{{ url_for('index') }}"><h1>NLP PDF journal article keyword extraction</h1></a>
+<div class="input-box">
+  <a  href="{{ url_for('index') }}"><h1>NLP PDF journal article keyword extraction</h1></a>
+</div>
 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-beige">
@@ -46,7 +48,7 @@
 
   <br>
 
-  <div class="col-5" id="flash-msg">
+  <div class="col-6" id="flash-msg">
   {% with errors = get_flashed_messages(category_filter=["warning"]) %}
       {% if errors %}
           {%- for message in errors %}
