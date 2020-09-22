@@ -3,3 +3,4 @@ gunicorn
 nltk
 pdfminer.six
 tensorflow
+beautifulsoup4
