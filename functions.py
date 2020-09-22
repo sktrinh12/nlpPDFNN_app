@@ -93,19 +93,21 @@ def download_file(pdf_title, download_url, file_path):
 
 
 def get_doi_links(soup):
-    """find a tags from doi links if OA API doesn't work, use this web-scrape
-    method"""
-    dlink_lst = []
+    """find a tags from doi links if OA API doesn't work, use this web-scrape method"""
+    dlink_lst = set()
     try:
         for u in soup.find_all('a'):
-            if 'doi' in u.get('href'):
-                dlink_lst.append(u.get('href'))
-                print('DOI href: {0}'.format(u.get('href')))
-    except (requests.ConnectionError, Exception):
-        dlink_lst.append(soup.find_all(
+            try:
+                if 'doi' in u['href']:
+                    dlink_lst.add(u['href'])
+                    print('DOI href: {0}'.format(u.get('href')))
+            except KeyError:
+                pass
+    except (ConnectionResetError, Exception):
+        dlink_lst.add(soup.find_all(
             'a', {"data-ga-action": "DOI"}).get('href'))
-        print(f'first try, dlink: {dlink_lst[0]}')
-    return dlink_lst
+        print(f'first try, dlink: {list(dlink_lst)[0]}')
+    return list(dlink_lst)
 
 
 def pubmed_api(pmid):
