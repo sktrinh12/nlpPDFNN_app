@@ -8,7 +8,7 @@ There are two version of the `Dockerfile`; one for testing locally and a second 
 
 After installing all dependencies and building from `Dockerfile`, run the app by entering its folder and typing:
 
-`docker run -d app-name`
+`docker run -d -p 8050:8050 app-name`
 
 There are two tabs that refer to the method of parsing. One is through an email link provided in a weekly email blast, and another by simply uploading the `.pdf` or `.txt` file. The former case uses PubMed's OpenAccess API to download the `.pdf` file programmatically, whereas the latter method prompts users to upload a local file. The file could be a `.txt` or `.pdf` file. The output in both cases will return two small `HTML` tables:
 1. Guesstimated NSC numbers that relate to the natural product extract (compound)
