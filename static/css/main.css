@@ -16,12 +16,21 @@
 .bg-beige{
   background-color: #f1f7dc;
 }
-input[type=url] {
-   width: 300px;
+input[type=text] {
+   width: 380px;
 }
 
 .input-box {
   margin-left:1.25%;
+}
+
+.download-div {
+  display:flex;
+}
+
+.download-btn {
+  margin-left:2%;
+  margin-top:-2px;
 }
 
 #flash-msg {
