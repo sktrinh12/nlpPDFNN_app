@@ -44,12 +44,17 @@ def test():
     # rows = ceil(length_nscs / 5)
     # print(length_nscs,rows)
 
-    return render_template("upload_pdf.html",
+    return render_template("insert_text_page.html",
                            filename='test_file.file',
+                           file_exists=False,
                            wp=poss_wp,
                            nscs=poss_nscs,
                            switch_tab_var='email')
 
+@app.route("/return-file/<filename>")
+def return_file(filename):
+    full_path = os.path.join(cwd, 'static', 'uploads', filename)
+    return send_file(full_path)
 
 @app.route("/insert-text", methods=["GET", "POST"])
 def insert_text():
@@ -69,6 +74,9 @@ def insert_text():
                         app.config['PDF_UPLOADS'], f'{filename}.pdf')
                     msg = f"pdf file saved ... {filepath}"
                     print(msg)
+                    file_exists = False
+                    if os.path.exists(filepath):
+                        file_exists = True
                     poss_wp, poss_nscs = tokenise_render_v2(filepath)
                     if poss_wp == False and poss_nscs == False:
                         msg = f"The PDF file seems corrupted. Not able to parse\
@@ -89,6 +97,7 @@ def insert_text():
                                            # rows=rows,
                                            # length_nscs=length_nscs,
                                            filename=filename,
+                                           file_exists=file_exists,
                                            switch_tab_var='email')
                 msg = f"That PDF file is not available in the Open Access subset\
                 and it cannot be retrieved via the PMC OA Service. Not every\
