@@ -193,7 +193,7 @@ def bs_parse_email_dl_pdf(url, file_path):
                 url, pdf_title, e))
 
     if successful_try:
-        download_file(pdf_title, dlink, file_path)
+        download_file(new_pdf_title, dlink, file_path)
         print(f'Downloaded file: {pdf_title} ({dlink})')
     return (successful_try, pdf_title)
 
