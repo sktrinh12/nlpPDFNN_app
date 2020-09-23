@@ -1,0 +1,13 @@
+{% if file_exists is sameas false %}
+    {% set filename = '#' %}
+    {% set state = 'disabled' %}
+{% else %}
+    {% set state = '' %}
+{% endif %}
+
+
+<a href="/return-file/{{filename}}.pdf" target="blank">
+    <button class="btn btn-outline-secondary" {{state}}>
+	Download PDF
+    </button>
+</a>
