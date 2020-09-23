@@ -2,8 +2,8 @@ FROM python:3.7-slim-buster
 
 ADD . /app
 WORKDIR /app
-ADD requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+ADD ./requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 EXPOSE 8050
 RUN mkdir -p static/uploads
 
