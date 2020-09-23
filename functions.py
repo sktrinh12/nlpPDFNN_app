@@ -2,9 +2,9 @@ import tensorflow as tf
 from init import *
 from collections import defaultdict  # to get unique values in list
 import re
+from datetime import datetime, timedelta
 import bs4 as bs
 import requests
-from os import path
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.corpus import stopwords
@@ -35,7 +35,7 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
        'Accept-Language': 'en-US,en;q=0.8',
        'Connection': 'keep-alive'}
 
-model_file = path.join(__file__.replace(
+model_file = os.path.join(__file__.replace(
     'functions.py', ''), 'models/taxon_model')
 model = tf.keras.models.load_model(model_file)
 
@@ -212,11 +212,17 @@ def load_text(load_input):  # just read raw text form or from pdf
     return read_output
 
 
-def rm_file(filepath):
-    # after reading in the text and saving to var, delete file to tidy
-    if os.path.exists(filepath):
-        os.remove(filepath)
-
+def rm_files():
+    '''after reading in the text and saving to uploads dir, then parsing the pdf
+file; loop thru directory and if a file is older by one hour, delete file to
+tidy'''
+    parent_path = os.path.join(cwd, 'static', 'uploads')
+    for fi in os.listdir(parent_path):
+        file_path = os.path.join(parent_path, fi)
+        stat = os.stat(file_path)
+        mtime = datetime.fromtimestamp(stat.st_mtime)
+        if datetime.now() - mtime > timedelta(hours=1):
+            os.remove(file_path)
 
 def filter_text_pos(pdf_pt):
     '''
@@ -261,9 +267,8 @@ def tokenise_render_v2(filepath):
     """tokenize the body of text from pdf file then remove file in static
     folder, then loop thru to check for taxonomy names"""
     text_body = load_text(filepath)
-    if text_body:
-        rm_file(filepath)  # clean up file in static folder
-    if len(text_body) < 20:
+    rm_files()  # clean up files in static folder
+    if len(text_body) < 20: # if the pdf file is corrupt/un-readable; set to 'None'
         return False, False
     token_pdf = word_tokenize(text_body)
     filtered_pdf = filter_nonchar(
