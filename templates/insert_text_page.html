@@ -41,6 +41,12 @@
 
       {% if filename is defined %}
       	<h4><span class="blue-primary">Filename: </span>{{ filename }}</h4>
+        <div class="download-div">
+        <h4><span class="blue-primary">PDF Download: </span></h4>
+        <div class="download-btn">
+            {% include 'downloadfile.html' %}
+        </div>
+        </div>
       {% endif %}
 
       {% if nscs is defined %}
