@@ -68,13 +68,8 @@ def filter_nonchar(paragraph_list):
 
 
 def remove_nonascii(pdf_title):
-    """remove non-ascii characters from request object for html parsing of pdf article title"""
-    title = ""
-    for l in pdf_title:
-        num = ord(l)
-        if (num >= 0):
-            if (num <= 127):
-                title += l
+    """remove non-ascii characters besides 'space' from title for filepath parsing"""
+    title = re.sub('[^A-Za-z0-9\s-]+','', pdf_title)
     return title
 
 
@@ -192,10 +187,11 @@ def bs_parse_email_dl_pdf(url, file_path):
             print('>>> could not scrape and not within the OpenAccess API: \n{0}\n{1}\n{2}'.format(
                 url, pdf_title, e))
 
+    print(new_pdf_title)
     if successful_try:
         download_file(new_pdf_title, dlink, file_path)
         print(f'Downloaded file: {pdf_title} ({dlink})')
-    return (successful_try, pdf_title)
+    return (successful_try, new_pdf_title)
 
 
 def load_text(load_input):  # just read raw text form or from pdf
