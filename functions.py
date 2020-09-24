@@ -76,6 +76,8 @@ def remove_nonascii(pdf_title):
 def download_file(pdf_title, download_url, file_path):
     """helper function to download pdf file if web-scraped successfully or use
     of OA API thru PubMed"""
+    if not os.path.exists(file_path):
+        os.mkdir(file_path)
     try:
         response = requests.get(download_url, headers=hdr)
         fp = os.path.join(file_path, f'{pdf_title}.pdf')
@@ -190,7 +192,7 @@ def bs_parse_email_dl_pdf(url, file_path):
     print(new_pdf_title)
     if successful_try:
         download_file(new_pdf_title, dlink, file_path)
-        print(f'Downloaded file: {pdf_title} ({dlink})')
+        print(f'Downloaded file: {new_pdf_title} ({dlink})')
     return (successful_try, new_pdf_title)
 
 
