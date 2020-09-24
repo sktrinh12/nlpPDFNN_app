@@ -20,4 +20,4 @@ print("="*30)
 
 app.config["PDF_UPLOADS"] = f"{cwd}/static/uploads"
 app.config["ALLOWED_FILE_EXT"] = ["PDF", "TXT"]
-app.config["MAX_FILESIZE"] = 5 * 1024 * 1024#bytes (~5MB)
+app.config["MAX_FILESIZE"] = 10 * 1024 * 1024#bytes (~5MB)
