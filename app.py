@@ -67,6 +67,7 @@ def insert_text():
                 print(f"email link: {email_link}")
                 # poss_wp = ["resemble tanke", "labored asfk","fog pweoiqr", "ride 234jlkcv"]
                 # poss_nscs = ["N7104382", "N7104382", "N7104382", "N7104382"]
+                # the filename will have non-ascii chars stripped
                 return_tries, filename = bs_parse_email_dl_pdf(
                     email_link, app.config['PDF_UPLOADS'])
                 if return_tries:
