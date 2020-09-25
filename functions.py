@@ -69,7 +69,7 @@ def filter_nonchar(paragraph_list):
 
 def remove_nonascii(pdf_title):
     """remove non-ascii characters besides 'space' from title for filepath parsing"""
-    title = re.sub('[^A-Za-z0-9\s-]+','', pdf_title)
+    title = re.sub('[^A-Za-z0-9\s-]+', '', pdf_title)
     return title
 
 
@@ -222,6 +222,7 @@ tidy'''
         if datetime.now() - mtime > timedelta(hours=1):
             os.remove(file_path)
 
+
 def filter_text_pos(pdf_pt):
     '''
     filter text based on part of speech tag and neighbouring characteristics
@@ -266,7 +267,7 @@ def tokenise_render_v2(filepath):
     folder, then loop thru to check for taxonomy names"""
     text_body = load_text(filepath)
     rm_files()  # clean up files in static folder
-    if len(text_body) < 20: # if the pdf file is corrupt/un-readable; set to 'None'
+    if len(text_body) < 20:  # if the pdf file is corrupt/un-readable; set to 'None'
         return False, False
     token_pdf = word_tokenize(text_body)
     filtered_pdf = filter_nonchar(
@@ -326,7 +327,7 @@ def extract_nsc(text_body):
     first_pass_regex_match = [rtn_regex_grp(
         p, text_body) for p in nsc_prefix_lst_short]
     second_pass_regex_match = re.findall(
-        r'([J|C|N|Q|F|M|0]{1}[1-9]{2,}\w+)', text_body)
+        r'([J|C|N|Q|F|M|0]{1}[0-9]{2,}\w+)', text_body)
     cmb_regex_matches = list(
         set(second_pass_regex_match + [m for m in first_pass_regex_match if m]))
     try:
