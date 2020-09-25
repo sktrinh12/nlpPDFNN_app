@@ -7,6 +7,6 @@ Makefile
 *.pyo
 \<Plug\>_
 .DS_Store
-static/uploads
+static/uploads/*
 __pycache__
 .ipynb_checkpoints/
