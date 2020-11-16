@@ -327,7 +327,7 @@ def extract_nsc(text_body):
     first_pass_regex_match = [rtn_regex_grp(
         p, text_body) for p in nsc_prefix_lst_short]
     second_pass_regex_match = re.findall(
-        r'([J|C|N|Q|F|M|0]{1}[0-9]{2,}\w+)', text_body)
+        r'([H|L|J|C|N|Q|F|M|0]{1}[0-9]{2,}\w+)', text_body)
     cmb_regex_matches = list(
         set(second_pass_regex_match + [m for m in first_pass_regex_match if m]))
     try:
